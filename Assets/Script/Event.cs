@@ -10,9 +10,11 @@ using UnityEngine.UI;
 public class Event : MonoBehaviour
 {
     public Plant plant;
-    public GameObject eventObj, eventFront;
-
+    public GameObject eventObj, eventIcon, eventGauge;
     public bool isEvent;
+
+    //오디오 소스
+    public AudioSource eventAudio;
 
     //이벤트 제한시간
     public float coolTime;
@@ -40,6 +42,8 @@ public class Event : MonoBehaviour
 
     void Start()
     {
+        eventAudio = GetComponent<AudioSource>();
+
         //코루틴 할당
         coroutine = TimeLimit(coolTime);
 
@@ -80,14 +84,14 @@ public class Event : MonoBehaviour
         print("시간제한 코루틴 실행");
         Debug.Log(cool);
 
-        eventFront.SetActive(true);
+        eventGauge.SetActive(true);
         //이벤트 쿨타임 시각화
-        eventFront.GetComponent<Image>().fillAmount = 0;
+        eventGauge.GetComponent<Image>().fillAmount = 0;
 
         while (cool > 0f)
         {
             cool -= Time.deltaTime;
-            eventFront.GetComponent<Image>().fillAmount = (1.0f / cool);
+            eventGauge.GetComponent<Image>().fillAmount = (1.0f / cool);
             yield return new WaitForFixedUpdate();
         }
 
@@ -120,13 +124,44 @@ public class Event : MonoBehaviour
         //만약 제거해야 되면 이렇게
         //아니면 그대로
         if((int)eventType==5)
+        {
             plant.ResetPlant();
+
+            eventAudio.clip= SoundManager.instance.GetSFX("Shovel");
+            eventAudio.Play();
+        }
         else
         {
             //이벤트 제한시간 코루틴 중단
             StopCoroutine(coroutine);            
             coroutine = TimeLimit(coolTime);
 
+            switch((int)eventType)
+            {
+                case 0:
+                    eventAudio.clip = SoundManager.instance.GetSFX("Planting");
+                    eventAudio.Play();
+                    break;
+                case 1:
+                    eventAudio.clip = SoundManager.instance.GetSFX("Fertilizer");
+                    eventAudio.Play();
+                    break;
+                case 2:
+                    eventAudio.clip = SoundManager.instance.GetSFX("Watering");
+                    eventAudio.Play();
+                    break;
+                case 3:
+                    eventAudio.clip = SoundManager.instance.GetSFX("AwayRabbit");
+                    eventAudio.Play();
+                    break;
+                case 4:
+                    eventAudio.clip = SoundManager.instance.GetSFX("Pruning");
+                    eventAudio.Play();
+                    break;
+                default:
+                    Debug.LogWarning("잘못된 사운드 할당입니다.");
+                    break;
+            }
 
             //GrowUp()함수 호출
             plant.GrowUp(frames[(int)eventType]);
@@ -152,8 +187,7 @@ public class Event : MonoBehaviour
             case 0:
                 //1단계(토양)이면 씨앗 이벤트 호출
                 eventType = EventType.Sowing;
-                eventObj.GetComponent<Image>().sprite = eventSprites[(int)eventType];
-                eventFront.GetComponent<Image>().sprite = eventSprites[(int)eventType];
+                eventIcon.GetComponent<Image>().sprite = eventSprites[(int)eventType];
 
                 isEvent=true;
                 break;
@@ -164,8 +198,7 @@ public class Event : MonoBehaviour
                 //2~4단계면 1~3중 랜덤 호출
                 //코루틴 호출
                 eventType = (EventType)UnityEngine.Random.Range(1, 4);
-                eventObj.GetComponent<Image>().sprite = eventSprites[(int)eventType];
-                eventFront.GetComponent<Image>().sprite = eventSprites[(int)eventType];
+                eventIcon.GetComponent<Image>().sprite = eventSprites[(int)eventType];
 
                 coroutine = TimeLimit(coolTime);
                 StartCoroutine(coroutine);
@@ -175,8 +208,7 @@ public class Event : MonoBehaviour
                 //4단계(올리브)면 1~4중 랜덤
                 //코루틴 호출
                 eventType = (EventType)UnityEngine.Random.Range(1, 5);
-                eventObj.GetComponent<Image>().sprite = eventSprites[(int)eventType];
-                eventFront.GetComponent<Image>().sprite = eventSprites[(int)eventType];
+                eventIcon.GetComponent<Image>().sprite = eventSprites[(int)eventType];
 
                 coroutine = TimeLimit(coolTime);
                 StartCoroutine(coroutine);
@@ -184,8 +216,7 @@ public class Event : MonoBehaviour
 
             case 5:
                 eventType = EventType.Removing;
-                eventObj.GetComponent<Image>().sprite = eventSprites[(int)eventType];
-                eventFront.GetComponent<Image>().sprite = eventSprites[(int)eventType];
+                eventIcon.GetComponent<Image>().sprite = eventSprites[(int)eventType];
                 //5단계(시듦)이면 제거 이벤트 호출
 
                 isEvent = true;
