@@ -13,8 +13,6 @@ public class VideoManager : MonoBehaviour
     void Start()
     {
         vp.Prepare();
-
-        VideoPrint();
     }
 
     void LoopEnd(VideoPlayer vp)

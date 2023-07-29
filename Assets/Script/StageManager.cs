@@ -6,6 +6,7 @@ public class StageManager : MonoBehaviour
 {
     public GameObject[] plants;
     public bool stageClear=false;
+    public int stageNumber;
 
     // Update is called once per frame
     void Update()
@@ -23,6 +24,7 @@ public class StageManager : MonoBehaviour
 
         if(stageClear)
         {
+            GameManager.instance.isClearStage[stageNumber] = true;
             //스테이지 클리어!
         }
     }
