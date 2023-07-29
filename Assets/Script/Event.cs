@@ -4,12 +4,15 @@ using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEditor.UI;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class Event : MonoBehaviour
 {
     public Plant plant;
     public GameObject eventObj, eventFront;
+
+    public bool isEvent;
 
     //이벤트 제한시간
     public float coolTime;
@@ -72,6 +75,8 @@ public class Event : MonoBehaviour
 
     public IEnumerator TimeLimit(float cool)
     {
+        isEvent = true;
+
         print("시간제한 코루틴 실행");
         Debug.Log(cool);
 
@@ -86,6 +91,7 @@ public class Event : MonoBehaviour
             yield return new WaitForFixedUpdate();
         }
 
+        isEvent = false;
         //Fail() 호출
         Fail();
 
@@ -118,8 +124,9 @@ public class Event : MonoBehaviour
         else
         {
             //이벤트 제한시간 코루틴 중단
-            StopCoroutine(coroutine);
+            StopCoroutine(coroutine);            
             coroutine = TimeLimit(coolTime);
+
 
             //GrowUp()함수 호출
             plant.GrowUp(frames[(int)eventType]);
@@ -147,6 +154,8 @@ public class Event : MonoBehaviour
                 eventType = EventType.Sowing;
                 eventObj.GetComponent<Image>().sprite = eventSprites[(int)eventType];
                 eventFront.GetComponent<Image>().sprite = eventSprites[(int)eventType];
+
+                isEvent=true;
                 break;
 
             case 1:
@@ -157,9 +166,9 @@ public class Event : MonoBehaviour
                 eventType = (EventType)UnityEngine.Random.Range(1, 4);
                 eventObj.GetComponent<Image>().sprite = eventSprites[(int)eventType];
                 eventFront.GetComponent<Image>().sprite = eventSprites[(int)eventType];
-                Debug.Log("작동1");
+
+                coroutine = TimeLimit(coolTime);
                 StartCoroutine(coroutine);
-                Debug.Log("작동2");
                 break;
 
             case 4:
@@ -168,6 +177,8 @@ public class Event : MonoBehaviour
                 eventType = (EventType)UnityEngine.Random.Range(1, 5);
                 eventObj.GetComponent<Image>().sprite = eventSprites[(int)eventType];
                 eventFront.GetComponent<Image>().sprite = eventSprites[(int)eventType];
+
+                coroutine = TimeLimit(coolTime);
                 StartCoroutine(coroutine);
                 break;
 
@@ -176,6 +187,8 @@ public class Event : MonoBehaviour
                 eventObj.GetComponent<Image>().sprite = eventSprites[(int)eventType];
                 eventFront.GetComponent<Image>().sprite = eventSprites[(int)eventType];
                 //5단계(시듦)이면 제거 이벤트 호출
+
+                isEvent = true;
                 break;
 
             default:

@@ -10,12 +10,13 @@ public class Plant : MonoBehaviour
     public GameObject plant;
 
     public int hp, exp;
-    bool isComplete = false, isOlive;
+    public bool isComplete = false;
+    bool isOlive;
     public int growGrade = 0;
 
     public Sprite[] poppySprites;
     public Sprite[] oliveSprites;
-    public Sprite[] plantSprites;
+    Sprite[] plantSprites;
 
     //식물 구조체와 속성
     public struct PlantFrame
@@ -25,6 +26,9 @@ public class Plant : MonoBehaviour
     PlantFrame[] poppy = new PlantFrame[6];
     PlantFrame[] olive = new PlantFrame[6];
     PlantFrame[] plants = new PlantFrame[6];
+
+    public GameObject[] hpGauge_two, hpGauge_three;
+    public GameObject twoGauge_Parents, threeGauge_Parents;
 
     void Start()
     {
@@ -69,6 +73,37 @@ public class Plant : MonoBehaviour
         #endregion
     }
 
+    void HP_Update()
+    {
+        if (growGrade >= 1 && growGrade <= 4)
+        {
+            if (plants[growGrade].maxHP == 3)
+            {
+                twoGauge_Parents.SetActive(false);
+                for (int i = 0; i < 3; i++)
+                    hpGauge_three[i].SetActive(false);
+                for (int i=0;i< hp;i++)
+                    hpGauge_three[i].SetActive(true);
+                threeGauge_Parents.SetActive(true);
+            }
+            else
+            {
+                threeGauge_Parents.SetActive(false);
+                for (int i = 0; i < 2; i++)
+                    hpGauge_two[i].SetActive(false);
+                for (int i = 0; i < hp; i++)
+                    hpGauge_two[i].SetActive(true);
+                twoGauge_Parents.SetActive(true);
+            }
+        }
+        else
+        {
+            threeGauge_Parents.SetActive(false);
+            twoGauge_Parents.SetActive(false);
+        }
+
+    }
+
     //올리브인지 판단
     public void OliveDecide()
     {
@@ -110,6 +145,9 @@ public class Plant : MonoBehaviour
         eventControl.eventObj.SetActive(false);
         eventControl.eventFront.SetActive(false);
 
+        //체력 업데이트 삽입
+        HP_Update();
+
         //이벤트 딜레이 코루틴 호출
         StartCoroutine(eventControl.DelayTime());
     }
@@ -138,6 +176,9 @@ public class Plant : MonoBehaviour
 
                 hp = plants[growGrade].maxHP;
                 exp = plants[growGrade].maxEXP;
+
+                //체력 업데이트 삽입
+                HP_Update();
             }
             else
             {
@@ -148,6 +189,9 @@ public class Plant : MonoBehaviour
         {
             eventControl.eventObj.SetActive(false);
 
+            //체력 업데이트 삽입
+            HP_Update();
+
             //이벤트 딜레이 코루틴 호출
             StartCoroutine(eventControl.DelayTime());
         }
@@ -156,7 +200,6 @@ public class Plant : MonoBehaviour
     public void ResetPlant()
     {
         growGrade = 0;
-        Debug.Log(plantSprites[growGrade]);
         plant.GetComponent<SpriteRenderer>().sprite = plantSprites[growGrade];
         isComplete = false;
 
@@ -166,5 +209,8 @@ public class Plant : MonoBehaviour
 
         hp = plants[growGrade].maxHP;
         exp = plants[growGrade].maxEXP;
+
+        //체력 업데이트 삽입
+        HP_Update();
     }
 }
