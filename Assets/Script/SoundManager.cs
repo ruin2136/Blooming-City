@@ -37,6 +37,8 @@ public class SoundManager : MonoBehaviour
     public AudioClip[] awayRabbitSFXArr;
     public AudioClip[] pruningSFXArr;
     public AudioClip[] shovelSFXArr;
+    [Header("Extra SFX")]
+    public AudioClip[] EatingSoundByRabbit;
 
     void Start()
     {
@@ -51,6 +53,7 @@ public class SoundManager : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
         #endregion
 
+        InitBGMClip();
         PlayBGM();
     }
 
@@ -59,6 +62,26 @@ public class SoundManager : MonoBehaviour
         switch (SceneManager.GetActiveScene().name)
         {
             case "MainScene":
+                if (GameManager.instance.GetNumOfClearStage() == 0)
+                {
+                    audioSource.clip = BGMDic["SelectBGM_0"];
+                }
+                if (GameManager.instance.GetNumOfClearStage() == 1)
+                    audioSource.clip = BGMDic["SelectBGM_1"];
+                if (GameManager.instance.GetNumOfClearStage() == 2)
+                    audioSource.clip = BGMDic["SelectBGM_2"];
+                if (GameManager.instance.GetNumOfClearStage() == 3)
+                    audioSource.clip = BGMDic["SelectBGM_3"];
+                break;
+            case "Stage1":
+                audioSource.clip = BGMDic["StageBGM_0"];
+                break;
+            case "Stage2":
+                audioSource.clip = BGMDic["StageBGM_1"];
+                break;
+            case "Stage3":
+                audioSource.clip = BGMDic["StageBGM_2"];
+                break;
             default:
                 break;
         }
@@ -66,7 +89,44 @@ public class SoundManager : MonoBehaviour
 
     void PlayBGM()
     {
-        audioSource.clip = BGMDic["SelectBGM_3"];
         audioSource.Play();
+    }
+
+    public AudioClip GetSFX(string clipName)
+    {
+        int i = UnityEngine.Random.Range(0, 3);
+        switch (clipName)   //AudioClip 초기화
+        {
+            #region GrowUpSound
+            case "Planting":
+                audioSource.clip = plantingSFXArr[i];
+                break;
+            case "Fertilizer":
+                audioSource.clip = fertilizerSFXArr[i];
+                break;
+            case "Watering":
+                audioSource.clip = WarteringSFXArr[i];
+                break;
+            case "AwayRabbit":
+                audioSource.clip = awayRabbitSFXArr[i];
+                break;
+            case "Pruning":
+                audioSource.clip = pruningSFXArr[i];
+                break;
+            case "Shovel":
+                audioSource.clip = shovelSFXArr[i];
+                break;
+            #endregion
+            #region ExtraSound
+            case "EatingSoundByRabbit":
+                audioSource.clip = EatingSoundByRabbit[i];
+                break;
+            #endregion
+            default:
+                Debug.LogWarning("도대체 무슨 사운드를 호출하신건가요? 멍청아!");
+                break;
+        }
+
+        return audioSource.clip;
     }
 }

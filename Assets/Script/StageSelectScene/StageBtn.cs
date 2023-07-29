@@ -10,6 +10,7 @@ public class StageBtn : MonoBehaviour
     public GameObject tapToStartBtn;
     public GameObject[] selectBtnArr;
     public GameObject[] FadeOutObjectArr;
+    public GameObject tapToStartText; 
 
     #region FadeInSetting
     [Header("FadeInSetting")]
@@ -43,6 +44,29 @@ public class StageBtn : MonoBehaviour
         SceneManager.LoadScene("Stage3");
     }
     #endregion
+
+    private void Start()
+    {
+        tapToStartBtn.GetComponent<Button>().interactable = false;
+
+        if (GameManager.instance.isCutSceneShown)
+        {
+
+        }
+        else //컷씬 및 이미지 페이드 연출
+        {
+            //영상출력부분
+
+
+
+            StartCoroutine(CutSceneFadeIn());   //배경 이미지 페이드인(컷씬전용 하드코딩함수)
+
+            tapToStartBtn.GetComponent<Button>().interactable = true;
+            tapToStartText.SetActive(true);
+
+            GameManager.instance.isCutSceneShown = false;
+        }
+    }
 
     public void TapToStartBtn()
     {
@@ -96,6 +120,15 @@ public class StageBtn : MonoBehaviour
 
             FadeOutObject.GetComponent<Image>().color = c;
             yield return new WaitForSeconds(Time.deltaTime);
+        }
+    }
+
+    public IEnumerator CutSceneFadeIn()
+    {
+        yield return new WaitForSeconds(22f);
+        for (int i = 0; i < FadeOutObjectArr.Length; i++)
+        {
+            StartCoroutine(FadeIn(FadeOutObjectArr[i]));
         }
     }
 }
