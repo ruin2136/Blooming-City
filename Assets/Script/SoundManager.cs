@@ -54,7 +54,10 @@ public class SoundManager : MonoBehaviour
         #endregion
 
         InitBGMClip();
-        PlayBGM();
+        if (!GameManager.instance.isCutSceneShown)
+            Invoke("PlayBGM", 22f);
+        else
+            PlayBGM();
     }
 
     void InitBGMClip()

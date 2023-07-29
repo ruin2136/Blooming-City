@@ -9,8 +9,12 @@ public class StageBtn : MonoBehaviour
 {
     public GameObject tapToStartBtn;
     public GameObject[] selectBtnArr;
+    public Sprite[] ChangeSelectBtnArr;
+
     public GameObject[] FadeOutObjectArr;
-    public GameObject tapToStartText; 
+    public GameObject tapToStartText;
+    public GameObject videoManager;
+    public GameObject backGround;
 
     #region FadeInSetting
     [Header("FadeInSetting")]
@@ -57,7 +61,7 @@ public class StageBtn : MonoBehaviour
         {
             Debug.Log("진입1");
             //영상출력부분
-
+            videoManager.GetComponent<VideoManager>().VideoPrint();
             StartCoroutine(CutSceneSetting());
         }
     }
@@ -71,6 +75,7 @@ public class StageBtn : MonoBehaviour
         }
 
         Destroy(tapToStartBtn);
+        tapToStartText.SetActive(false);
     }
 
     public IEnumerator FadeIn(GameObject Btn)
@@ -124,6 +129,7 @@ public class StageBtn : MonoBehaviour
         {
             StartCoroutine(FadeIn(FadeOutObjectArr[i]));
         }
+        StartCoroutine(FadeIn(backGround));
     }
 
     public IEnumerator CutSceneSetting()

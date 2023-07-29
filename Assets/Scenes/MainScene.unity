@@ -240,7 +240,7 @@ VideoPlayer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 309511937}
   m_Enabled: 1
-  m_VideoClip: {fileID: 32900000, guid: 7f9931183ebc60248ac40a87febbee3f, type: 3}
+  m_VideoClip: {fileID: 32900000, guid: c09b5affdab895f4d9db75a82d60a5be, type: 3}
   m_TargetCameraAlpha: 1
   m_TargetCamera3DLayout: 0
   m_TargetCamera: {fileID: 0}
@@ -1064,8 +1064,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -44, y: -97}
-  m_SizeDelta: {x: -1259.7375, y: -708.6024}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1304941541
 MonoBehaviour:
@@ -1557,7 +1557,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 5
+  m_SortingOrder: -1
   m_TargetDisplay: 0
 --- !u!224 &1813747938
 RectTransform:
@@ -1756,15 +1756,18 @@ MonoBehaviour:
   - {fileID: 1211352638}
   - {fileID: 575212890}
   - {fileID: 577484735}
+  ChangeSelectBtnArr: []
   FadeOutObjectArr:
   - {fileID: 394221718}
   - {fileID: 948701852}
   - {fileID: 988333972}
   tapToStartText: {fileID: 10038524}
-  fadeInTime: 2
+  videoManager: {fileID: 1813747934}
+  backGround: {fileID: 2001572240}
+  fadeInTime: 0.5
   fadeInStartAlpha: 0
   fadeInEndAlpha: 1
-  fadeOutTime: 2
+  fadeOutTime: 0.5
   fadeOutStartAlpha: 1
   fadeOutEndAlpha: 0
 --- !u!1 &2001572240
@@ -1817,7 +1820,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
