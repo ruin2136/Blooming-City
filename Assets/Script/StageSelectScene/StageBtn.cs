@@ -9,6 +9,7 @@ public class StageBtn : MonoBehaviour
 {
     public GameObject tapToStartBtn;
     public GameObject[] selectBtnArr;
+    public GameObject[] FadeOutObjectArr;
 
     #region FadeInSetting
     [Header("FadeInSetting")]
@@ -48,6 +49,7 @@ public class StageBtn : MonoBehaviour
         for (int i = 0; i < selectBtnArr.Length; i++)
         {
             StartCoroutine(FadeIn(selectBtnArr[i]));
+            StartCoroutine(FadeOut(FadeOutObjectArr[i]));
         }
 
         Destroy(tapToStartBtn);
@@ -71,6 +73,28 @@ public class StageBtn : MonoBehaviour
             c.a = Mathf.Lerp(fadeInStartAlpha, fadeInEndAlpha, currentTime / fadeInTime);  //투명도 조절 후 대입  
             
             Btn.GetComponent<Image>().color = c;
+            yield return new WaitForSeconds(Time.deltaTime);
+        }
+    }
+
+    public IEnumerator FadeOut(GameObject FadeOutObject)
+    {
+        #region 초기 변수선언
+        float currentTime = 0;
+        UnityEngine.Color c = FadeOutObject.GetComponent<Image>().color;
+        #endregion
+
+        while (currentTime < fadeOutTime)    //fadeInTime 초 만큼 반복
+        {
+            if (currentTime >= fadeOutTime)
+            {
+                currentTime = fadeOutTime;
+            }
+            currentTime += Time.deltaTime;
+
+            c.a = Mathf.Lerp(fadeOutStartAlpha, fadeOutEndAlpha, currentTime / fadeOutTime);  //투명도 조절 후 대입  
+
+            FadeOutObject.GetComponent<Image>().color = c;
             yield return new WaitForSeconds(Time.deltaTime);
         }
     }
