@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 161076709}
   - component: {fileID: 161076708}
   m_Layer: 5
-  m_Name: Front
+  m_Name: Back
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -151,7 +151,8 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 827021541}
   m_Father: {fileID: 814143882}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -564,6 +565,7 @@ GameObject:
   m_Component:
   - component: {fileID: 601883650}
   - component: {fileID: 601883649}
+  - component: {fileID: 601883651}
   m_Layer: 0
   m_Name: Plant
   m_TagString: Untagged
@@ -613,6 +615,23 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &601883651
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 601883648}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 760f6dcf8af353c4f9772b57aede96d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eventControl: {fileID: 827021544}
+  plant: {fileID: 0}
+  hp: 0
+  exp: 0
+  growGrade: 0
 --- !u!1 &814143881
 GameObject:
   m_ObjectHideFlags: 0
@@ -625,6 +644,7 @@ GameObject:
   - component: {fileID: 814143885}
   - component: {fileID: 814143884}
   - component: {fileID: 814143883}
+  - component: {fileID: 814143886}
   m_Layer: 5
   m_Name: EventCanvas
   m_TagString: Untagged
@@ -644,7 +664,6 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 161076706}
-  - {fileID: 827021541}
   m_Father: {fileID: 601883650}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -714,6 +733,25 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!114 &814143886
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 814143881}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7cb6335e7d0463c4c903d27f502bde3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  plant: {fileID: 0}
+  eventObj: {fileID: 0}
+  coolTime: 0
+  eventSprites: []
+  maxDelay: 0
+  minDelay: 0
+  eventType: 0
 --- !u!1 &827021540
 GameObject:
   m_ObjectHideFlags: 0
@@ -727,7 +765,7 @@ GameObject:
   - component: {fileID: 827021542}
   - component: {fileID: 827021544}
   m_Layer: 5
-  m_Name: Back
+  m_Name: Front
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -740,12 +778,12 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 827021540}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 814143882}
-  m_RootOrder: 1
+  m_Father: {fileID: 161076706}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
@@ -803,7 +841,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   plant: {fileID: 0}
-  cool: 5
+  eventObj: {fileID: 0}
+  coolTime: 0
   eventSprites: []
   maxDelay: 0
   minDelay: 0
