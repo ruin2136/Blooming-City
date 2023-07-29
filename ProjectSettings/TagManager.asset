@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Spot
   - Plant
+  - Wall
   layers:
   - Default
   - TransparentFX

@@ -23,7 +23,7 @@ public class GameManager : MonoBehaviour
     #endregion
 
     public bool[] isClearStage;
-    public bool isCutSceneShown = true;
+    public bool isCutSceneShown = false;
 
     public int GetNumOfClearStage()
     {

@@ -51,20 +51,14 @@ public class StageBtn : MonoBehaviour
 
         if (GameManager.instance.isCutSceneShown)
         {
-
+            Debug.Log("진입0");
         }
         else //컷씬 및 이미지 페이드 연출
         {
+            Debug.Log("진입1");
             //영상출력부분
 
-
-
-            StartCoroutine(CutSceneFadeIn());   //배경 이미지 페이드인(컷씬전용 하드코딩함수)
-
-            tapToStartBtn.GetComponent<Button>().interactable = true;
-            tapToStartText.SetActive(true);
-
-            GameManager.instance.isCutSceneShown = false;
+            StartCoroutine(CutSceneSetting());
         }
     }
 
@@ -125,10 +119,20 @@ public class StageBtn : MonoBehaviour
 
     public IEnumerator CutSceneFadeIn()
     {
-        yield return new WaitForSeconds(22f);
+        yield return new WaitForSeconds(22f);    //22초로 변경(영상 내용 나오는 시간)
         for (int i = 0; i < FadeOutObjectArr.Length; i++)
         {
             StartCoroutine(FadeIn(FadeOutObjectArr[i]));
         }
+    }
+
+    public IEnumerator CutSceneSetting()
+    {
+        StartCoroutine(CutSceneFadeIn());
+        yield return new WaitForSeconds(fadeInTime+23);
+
+        tapToStartBtn.GetComponent<Button>().interactable = true;
+        tapToStartText.SetActive(true);
+        GameManager.instance.isCutSceneShown = true;
     }
 }
