@@ -23,4 +23,5 @@ public class GameManager : MonoBehaviour
     #endregion
 
     public bool[] isClearStage;
+    
 }
