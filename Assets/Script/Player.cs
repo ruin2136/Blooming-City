@@ -12,6 +12,7 @@ public class Player : MonoBehaviour
     private float nowholdedTime; // 홀딩 중인 시간
 
     Transform transform;
+    Rigidbody2D rigid;
     ActionType actionType;
 
     public enum ActionType
@@ -27,11 +28,13 @@ public class Player : MonoBehaviour
     private void Start()
     {
         transform = GetComponent<Transform>();
+        rigid = transform.GetComponent<Rigidbody2D>();
     }
 
     private void Update()
     {
         Move();
+        Debug.Log(actionType);
     }
 
     private void Move()
@@ -39,22 +42,27 @@ public class Player : MonoBehaviour
         #region UpDown
         if (Input.GetKey(KeyCode.W))
         {
-            transform.position = transform.position + new Vector3(0, incresePosInUpdate, 0);
+            rigid.velocity = new Vector3(0, incresePosInUpdate, 0);
         }
         else if (Input.GetKey(KeyCode.S))
         {
-            transform.position = transform.position + new Vector3(0, -incresePosInUpdate, 0);
+            rigid.velocity = new Vector3(0, -incresePosInUpdate, 0);
         }
         #endregion
 
         #region LeftRight
         else if (Input.GetKey(KeyCode.A))
         {
-            transform.position = transform.position + new Vector3(-incresePosInUpdate, 0, 0);
+            rigid.velocity = new Vector3(-incresePosInUpdate, 0, 0);
         }
         else if (Input.GetKey(KeyCode.D))
         {
-            transform.position = transform.position + new Vector3(incresePosInUpdate, 0, 0);
+            rigid.velocity = new Vector3(incresePosInUpdate, 0, 0);
+        }
+        else
+        {
+            //키 뗐을 시 속도 리셋
+            rigid.velocity = Vector3.zero;
         }
         #endregion
     }
@@ -92,22 +100,25 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void OnTriggerStay2D(Collider2D collision)
+    private void OnCollisionStay2D(Collision2D collision)
     {                     
         int spotNum = -999;   //비초기화 값
 
-        switch (collision.tag)
+        switch (collision.gameObject.tag)
         {
             case "Spot":
-                if (Input.GetKeyDown(KeyCode.L))    //Init actionType 
+                if (Input.GetKey(KeyCode.L))    //Init actionType 
                 {
+                    #region Spot 정보 받아오기
+                    Debug.Log(collision.gameObject.name);
                     spotNum = collision.gameObject.GetComponent<Spot>().spotNumber;
                     DecideActionType(spotNum);
+                    #endregion
                 }
                 break;
 
             case "Plant":
-                if (Input.GetKeyDown(KeyCode.K))    //Holding Start
+                if (Input.GetKey(KeyCode.K))    //Holding Start
                 {
                     // 홀딩시간 측정
                     nowholdedTime += Time.deltaTime;
@@ -124,7 +135,7 @@ public class Player : MonoBehaviour
                 break;
 
             default:
-                Debug.LogWarning("접촉한 오브젝트 Tag : "+ collision.tag + "도대체 누구랑 충돌하신건가요?");
+                Debug.LogWarning("접촉한 오브젝트 Tag : "+ collision.gameObject.tag + "도대체 누구랑 충돌하신건가요?");
                 break;
         }
     }
