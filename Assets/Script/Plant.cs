@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using static TMPro.SpriteAssetUtilities.TexturePacker_JsonArray;
 
 public class Plant : MonoBehaviour
 {
@@ -9,10 +10,9 @@ public class Plant : MonoBehaviour
     public GameObject plant;
 
     public int hp, exp;
-    bool isComplete=false, isOlive;
+    bool isComplete = false, isOlive;
     public int growGrade = 0;
-    int eventType, plantsType;
-    
+
     public Sprite[] poppySprites;
     public Sprite[] oliveSprites;
     Sprite[] plantSprites;
@@ -42,7 +42,7 @@ public class Plant : MonoBehaviour
         poppy[3].maxEXP = 0;
 
         poppy[4].maxHP = -1;
-        poppy[4].maxEXP = -1;
+        poppy[4].maxEXP = 0;
 
         poppy[5].maxHP = -1;
         poppy[5].maxEXP = 0;
@@ -94,26 +94,42 @@ public class Plant : MonoBehaviour
     public void GrowUp(Event.EventFrame frame)
     {
         //매개변수 값을 hp, exp에 더함
-        hp += frame.upHP;
+        if (hp < plants[growGrade].maxHP)
+            hp += frame.upHP;
         exp += frame.upEXP;
 
         //검사 후 성장 단계 변경-값 초기화, 스프라이트 변경, isComplete 판정
         //경험치 검사=성장
-        if (exp >= plants[growGrade].maxEXP && plants[growGrade].maxEXP!=0)
+        if (exp >= plants[growGrade].maxEXP && plants[growGrade].maxEXP != 0)
         {
             growGrade += 1;
             plant.GetComponent<SpriteRenderer>().sprite = plantSprites[growGrade];
 
-            if(growGrade==3||growGrade==4)
+            if (growGrade == 3 || growGrade == 4)
                 isComplete = true;
 
-            hp=plants[growGrade].maxHP;
-            exp=0;
+            hp = plants[growGrade].maxHP;
+            exp = 0;
         }
         eventControl.eventObj.SetActive(false);
+        eventControl.eventFront.SetActive(false);
 
         //이벤트 딜레이 코루틴 호출
         StartCoroutine(eventControl.DelayTime());
+    }
+
+    public void ResetPlant()
+    {
+        growGrade = 0;
+        plant.GetComponent<SpriteRenderer>().sprite = plantSprites[growGrade];
+        isComplete = false;
+
+        //씨앗 이벤트 호출 및 켜기
+        eventControl.EventAppear();
+        eventControl.eventObj.SetActive(true);
+
+        hp = plants[growGrade].maxHP;
+        exp = plants[growGrade].maxEXP;
     }
 
     //시듦 함수
@@ -126,12 +142,12 @@ public class Plant : MonoBehaviour
         //스프라이트 변경, isComplete 판정
         //단계에 따라 상시 이벤트 호출
         //체력 검사=시듦 판정
-        if (hp <= plants[growGrade].maxHP)
+        if (hp <= 0)
         {
             if (growGrade >= 2)
             {
                 growGrade = 5;
-                plant.GetComponent<SpriteRenderer>().sprite= plantSprites[growGrade];
+                plant.GetComponent<SpriteRenderer>().sprite = plantSprites[growGrade];
                 isComplete = false;
 
                 //제거 이벤트 호출 및 켜기
@@ -143,16 +159,7 @@ public class Plant : MonoBehaviour
             }
             else
             {
-                growGrade = 0;
-                plant.GetComponent<SpriteRenderer>().sprite = plantSprites[growGrade];
-                isComplete = false;
-
-                //씨앗 이벤트 호출 및 켜기
-                eventControl.EventAppear();
-                eventControl.eventObj.SetActive(true);
-
-                hp = plants[growGrade].maxHP;
-                exp = plants[growGrade].maxEXP;
+                ResetPlant();
             }
         }
         else

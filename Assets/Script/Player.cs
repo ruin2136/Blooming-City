@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,9 +18,9 @@ public class Player : MonoBehaviour
 
     public enum ActionType
     {
-        Fertilizing = 0,
-        Sowing = 1,
-        Wartering = 2,
+        Sowing = 0,
+        Fertilizing = 1,
+        Watering = 2,
         AwayingRabbit = 3,
         Pruning = 4,
         Removing = 5
@@ -67,9 +68,13 @@ public class Player : MonoBehaviour
         #endregion
     }
 
-    private void Action(ActionType actionType)
+    private void Action(Event eventObj)
     {
-
+        if((int)eventObj.eventType==(int)actionType)
+        {
+            eventObj.Success();
+        }
+        
     }
     
     private void DecideActionType(int spotNum)
@@ -77,13 +82,13 @@ public class Player : MonoBehaviour
         switch (spotNum)
         {
             case 0:
-                actionType = ActionType.Fertilizing;
-                break;
-            case 1:
                 actionType = ActionType.Sowing;
                 break;
+            case 1:
+                actionType = ActionType.Fertilizing;
+                break;
             case 2:
-                actionType= ActionType.Wartering;
+                actionType= ActionType.Watering;
                 break;
             case 3:
                 actionType = ActionType.AwayingRabbit;
@@ -125,7 +130,7 @@ public class Player : MonoBehaviour
 
                     if(nowholdedTime > minHoldingTime)  //홀딩 시간 달성 시
                     {
-                        Action(actionType);
+                        Action(collision.gameObject.GetComponent<Plant>().eventControl);
                     }
                 }
                 else //Holding End
