@@ -66,6 +66,7 @@ public class Event : MonoBehaviour
         frames[5].upEXP = 0;
         #endregion
 
+        plant.OliveDecide();
         plant.Wither(frames[(int)eventType]);
     }
 

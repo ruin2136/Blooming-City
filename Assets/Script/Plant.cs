@@ -15,7 +15,7 @@ public class Plant : MonoBehaviour
 
     public Sprite[] poppySprites;
     public Sprite[] oliveSprites;
-    Sprite[] plantSprites;
+    public Sprite[] plantSprites;
 
     //식물 구조체와 속성
     public struct PlantFrame
@@ -67,14 +67,10 @@ public class Plant : MonoBehaviour
         olive[5].maxHP = -1;
         olive[5].maxEXP = 0;
         #endregion
-
-        //시작 시 올리브인지 랜덤하게 판단
-
-        OliveDecide();
     }
 
     //올리브인지 판단
-    void OliveDecide()
+    public void OliveDecide()
     {
         isOlive = Random.value > 0.5f;
 
@@ -118,20 +114,6 @@ public class Plant : MonoBehaviour
         StartCoroutine(eventControl.DelayTime());
     }
 
-    public void ResetPlant()
-    {
-        growGrade = 0;
-        plant.GetComponent<SpriteRenderer>().sprite = plantSprites[growGrade];
-        isComplete = false;
-
-        //씨앗 이벤트 호출 및 켜기
-        eventControl.EventAppear();
-        eventControl.eventObj.SetActive(true);
-
-        hp = plants[growGrade].maxHP;
-        exp = plants[growGrade].maxEXP;
-    }
-
     //시듦 함수
     public void Wither(Event.EventFrame frame)
     {
@@ -169,5 +151,20 @@ public class Plant : MonoBehaviour
             //이벤트 딜레이 코루틴 호출
             StartCoroutine(eventControl.DelayTime());
         }
+    }
+
+    public void ResetPlant()
+    {
+        growGrade = 0;
+        Debug.Log(plantSprites[growGrade]);
+        plant.GetComponent<SpriteRenderer>().sprite = plantSprites[growGrade];
+        isComplete = false;
+
+        //씨앗 이벤트 호출 및 켜기
+        eventControl.EventAppear();
+        eventControl.eventObj.SetActive(true);
+
+        hp = plants[growGrade].maxHP;
+        exp = plants[growGrade].maxEXP;
     }
 }
