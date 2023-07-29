@@ -9,8 +9,10 @@ using UnityEngine.UI;
 public class Event : MonoBehaviour
 {
     public Plant plant;
+    public GameObject eventObj;
 
-    public float cool;
+    //이벤트 제한시간
+    public float coolTime;
 
     public Sprite[] eventSprites;
     float eventDelay;
@@ -24,65 +26,54 @@ public class Event : MonoBehaviour
     //이벤트 구조체와 속성
     public struct EventFrame
     {
-        public int upHP, downHP, upEXP, timeLimit;
+        public int upHP, downHP, upEXP;
     }
     EventFrame[] frames = new EventFrame[6];
 
     void Start()
     {
-        #region 구조체 배열 초기화(이벤트 값들)
+        #region 이벤트 구조체 배열 초기화(이벤트 값들)
         frames[0].upHP = 3;
         frames[0].downHP = 3;
         frames[0].upEXP = 3;
-        frames[0].timeLimit = 3;
 
         frames[1].upHP = 3;
         frames[1].downHP = 3;
         frames[1].upEXP = 3;
-        frames[1].timeLimit = 3;
 
         frames[2].upHP = 3;
         frames[2].downHP = 3;
         frames[2].upEXP = 3;
-        frames[2].timeLimit = 3;
 
         frames[3].upHP = 3;
         frames[3].downHP = 3;
         frames[3].upEXP = 3;
-        frames[3].timeLimit = 3;
 
         frames[4].upHP = 3;
         frames[4].downHP = 3;
         frames[4].upEXP = 3;
-        frames[4].timeLimit = 3;
 
         frames[5].upHP = 3;
         frames[5].downHP = 3;
         frames[5].upEXP = 3;
-        frames[5].timeLimit = 3;
-
-        frames[6].upHP = 3;
-        frames[6].downHP = 3;
-        frames[6].upEXP = 3;
-        frames[6].timeLimit = 3;
         #endregion
 
         //테스트
-        StartCoroutine(CoolTime(cool));
+        StartCoroutine(CoolTime(coolTime));
         StartCoroutine(DelayTime());
     }
 
-    IEnumerator CoolTime(float cool)
+    public IEnumerator CoolTime(float cool)
     {
         print("쿨타임 코루틴 실행");
 
         //이벤트 쿨타임 시각화
-        gameObject.GetComponent<Image>().fillAmount = 0;
+        eventObj.GetComponent<Image>().fillAmount = 0;
 
         while (cool > 0f)
         {
             cool -= Time.deltaTime;
-            gameObject.GetComponent<Image>().fillAmount = (1.0f / cool);
+            eventObj.GetComponent<Image>().fillAmount = (1.0f / cool);
             yield return new WaitForFixedUpdate();
         }
 
@@ -92,7 +83,7 @@ public class Event : MonoBehaviour
         print("쿨타임 코루틴 완료");
     }
 
-    IEnumerator DelayTime()
+    public IEnumerator DelayTime()
     {
         eventDelay = UnityEngine.Random.Range(minDelay, maxDelay);
 
@@ -110,16 +101,16 @@ public class Event : MonoBehaviour
         print("이벤트 딜레이 코루틴 완료" + eventDelay);
     }
 
-    void Scuccess()
+    void Success()
     {
         //이벤트 제한시간 코루틴 중단
-        StopCoroutine(CoolTime(cool));
+        StopCoroutine(CoolTime(coolTime));
 
         //GrowUp()함수 호출
         plant.GrowUp(frames[(int)eventType]);
 
-        //이벤트 끄기, 이벤트 딜레이 코루틴 호출
-        StartCoroutine(DelayTime());
+        //이벤트 오브젝트 끄기
+        eventObj.SetActive(false);
     }
 
     void Fail()
@@ -127,17 +118,52 @@ public class Event : MonoBehaviour
         //Wither()함수 호출
         plant.Wither(frames[(int)eventType]);
 
-        //이벤트 끄기, 이벤트 딜레이 코루틴 호출
-        StartCoroutine(DelayTime());
+        //이벤트 오브젝트 끄기
+        eventObj.SetActive(false);
     }
 
-    void EventAppear()
+    public void EventAppear()
     {
-        //이벤트 제한시간 코루틴 호출
-        StartCoroutine(CoolTime(cool));
+        //이벤트 오브젝트 활성화
+        eventObj.SetActive(true);
 
-        //랜덤한 이벤트 호출(제한된)
-        //식물 단계, 종류에 따라 호출될 이벤트 랜덤하게 설정
-        eventType = EventType.rabbit;
+        //이벤트 타입 변경
+        //식물 단계에 따라 호출될 이벤트 랜덤하게 설정
+        switch (plant.growGrade)
+        {
+            case 0:
+                //1단계(토양)이면 씨앗 이벤트 호출
+                eventType = EventType.seed;
+                eventObj.GetComponent<Image>().sprite = eventSprites[(int)eventType];
+                break;
+
+            case 1:
+            case 2:
+            case 3:
+                //2~4단계면 1~3중 랜덤 호출
+                //코루틴 호출
+                eventType = (EventType)UnityEngine.Random.Range(1, 3);
+                eventObj.GetComponent<Image>().sprite = eventSprites[(int)eventType];
+                StartCoroutine(CoolTime(coolTime));
+                break;
+
+            case 4:
+                //4단계(올리브)면 1~4중 랜덤
+                //코루틴 호출
+                eventType = (EventType)UnityEngine.Random.Range(1, 4);
+                eventObj.GetComponent<Image>().sprite = eventSprites[(int)eventType];
+                StartCoroutine(CoolTime(coolTime));
+                break;
+
+            case 5:
+                eventType = EventType.remove;
+                eventObj.GetComponent<Image>().sprite = eventSprites[(int)eventType];
+                //5단계(시듦)이면 제거 이벤트 호출
+                break;
+
+            default:
+                Debug.Log("Event Error!");
+                break;
+        }
     }
 }
