@@ -9,7 +9,7 @@ using UnityEngine.UI;
 public class Event : MonoBehaviour
 {
     public Plant plant;
-    public GameObject eventObj;
+    public GameObject eventObj, eventFront;
 
     //이벤트 제한시간
     public float coolTime;
@@ -28,7 +28,7 @@ public class Event : MonoBehaviour
     {
         public int upHP, downHP, upEXP;
     }
-    EventFrame[] frames = new EventFrame[6];
+    public EventFrame[] frames = new EventFrame[6];
 
     void Start()
     {
@@ -59,8 +59,9 @@ public class Event : MonoBehaviour
         #endregion
 
         //테스트
-        StartCoroutine(CoolTime(coolTime));
-        StartCoroutine(DelayTime());
+
+
+        EventAppear();
     }
 
     public IEnumerator CoolTime(float cool)
@@ -68,12 +69,12 @@ public class Event : MonoBehaviour
         print("쿨타임 코루틴 실행");
 
         //이벤트 쿨타임 시각화
-        eventObj.GetComponent<Image>().fillAmount = 0;
+        eventFront.GetComponent<Image>().fillAmount = 0;
 
         while (cool > 0f)
         {
             cool -= Time.deltaTime;
-            eventObj.GetComponent<Image>().fillAmount = (1.0f / cool);
+            eventFront.GetComponent<Image>().fillAmount = (1.0f / cool);
             yield return new WaitForFixedUpdate();
         }
 
@@ -110,7 +111,7 @@ public class Event : MonoBehaviour
         plant.GrowUp(frames[(int)eventType]);
 
         //이벤트 오브젝트 끄기
-        eventObj.SetActive(false);
+        //eventObj.SetActive(false);
     }
 
     void Fail()
@@ -119,7 +120,7 @@ public class Event : MonoBehaviour
         plant.Wither(frames[(int)eventType]);
 
         //이벤트 오브젝트 끄기
-        eventObj.SetActive(false);
+        //eventObj.SetActive(false);
     }
 
     public void EventAppear()

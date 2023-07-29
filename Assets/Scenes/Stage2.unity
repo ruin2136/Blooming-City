@@ -273,7 +273,7 @@ BoxCollider2D:
     oldSize: {x: 1, y: 1}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
-    drawMode: 0
+    drawMode: 1
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
@@ -323,7 +323,7 @@ SpriteRenderer:
   m_Color: {r: 0.08069295, g: 0.8018868, b: 0.2256228, a: 1}
   m_FlipX: 0
   m_FlipY: 0
-  m_DrawMode: 0
+  m_DrawMode: 1
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
@@ -627,11 +627,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 760f6dcf8af353c4f9772b57aede96d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  eventControl: {fileID: 827021544}
-  plant: {fileID: 0}
+  eventControl: {fileID: 814143886}
+  plant: {fileID: 225070167}
   hp: 0
   exp: 0
-  growGrade: 0
+  growGrade: 1
+  poppySprites:
+  - {fileID: 21300000, guid: 2c0d9acce7585484f8264e5befd1a847, type: 3}
+  - {fileID: 21300000, guid: f7ebe04d35f018d4e8397e30f54e3bb0, type: 3}
+  - {fileID: 21300000, guid: a2c782f3e950ce8408e1d5baf594e2cc, type: 3}
+  - {fileID: 21300000, guid: 6a4622b3c2e1f7f4389579e4d935da1e, type: 3}
+  - {fileID: 21300000, guid: 79b14543f972f1544b99fb322325cd31, type: 3}
+  - {fileID: 21300000, guid: 702c3332195425d4884094393b7ab92b, type: 3}
+  oliveSprites:
+  - {fileID: 21300000, guid: 2c0d9acce7585484f8264e5befd1a847, type: 3}
+  - {fileID: 21300000, guid: a8c9e840d2882ac4c85824e4d7ee7507, type: 3}
+  - {fileID: 21300000, guid: 5dfb190108b1e764c8ca4e5ce053eeaf, type: 3}
+  - {fileID: 21300000, guid: 83466fecd2a1b2b489eca90fe52bf6ab, type: 3}
+  - {fileID: 21300000, guid: 4c069231e58c1ca4fafcf640af908aad, type: 3}
+  - {fileID: 21300000, guid: 852a49d7c188ca24d9471d52fb184a17, type: 3}
 --- !u!1 &814143881
 GameObject:
   m_ObjectHideFlags: 0
@@ -745,12 +759,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7cb6335e7d0463c4c903d27f502bde3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  plant: {fileID: 0}
-  eventObj: {fileID: 0}
-  coolTime: 0
-  eventSprites: []
-  maxDelay: 0
-  minDelay: 0
+  plant: {fileID: 601883651}
+  eventObj: {fileID: 161076705}
+  eventFront: {fileID: 827021540}
+  coolTime: 5
+  eventSprites:
+  - {fileID: 21300000, guid: 6b6a13642b11a474e81a437f9aa52627, type: 3}
+  - {fileID: 21300000, guid: 62bdcda96cc1b234f8722bbaf8307ac8, type: 3}
+  - {fileID: 21300000, guid: 39fd7b74d248583409d04ecea783e173, type: 3}
+  - {fileID: 21300000, guid: 79b14543f972f1544b99fb322325cd31, type: 3}
+  - {fileID: 21300000, guid: 93bf7b53949d1994385dc086af1747ff, type: 3}
+  - {fileID: 21300000, guid: f00b8a9e4280ebe4db6b4c1b47dc2150, type: 3}
+  maxDelay: 30
+  minDelay: 10
   eventType: 0
 --- !u!1 &827021540
 GameObject:
@@ -763,7 +784,6 @@ GameObject:
   - component: {fileID: 827021541}
   - component: {fileID: 827021543}
   - component: {fileID: 827021542}
-  - component: {fileID: 827021544}
   m_Layer: 5
   m_Name: Front
   m_TagString: Untagged
@@ -828,25 +848,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 827021540}
   m_CullTransparentMesh: 1
---- !u!114 &827021544
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 827021540}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7cb6335e7d0463c4c903d27f502bde3d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  plant: {fileID: 0}
-  eventObj: {fileID: 0}
-  coolTime: 0
-  eventSprites: []
-  maxDelay: 0
-  minDelay: 0
-  eventType: 0
 --- !u!1 &1165852459
 GameObject:
   m_ObjectHideFlags: 0

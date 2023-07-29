@@ -12,6 +12,9 @@ public class Plant : MonoBehaviour
     bool isComplete=false, isOlive;
     public int growGrade = 0;
     int eventType, plantsType;
+    
+    public Sprite[] poppySprites;
+    public Sprite[] oliveSprites;
     Sprite[] plantSprites;
 
     //식물 구조체와 속성
@@ -76,9 +79,15 @@ public class Plant : MonoBehaviour
         isOlive = Random.value > 0.5f;
 
         if (isOlive)
-            plants= olive;
+        {
+            plants = olive;
+            plantSprites = oliveSprites;
+        }
         else
-            plants= poppy;
+        {
+            plants = poppy;
+            plantSprites = poppySprites;
+        }
     }
 
     //성장 함수
@@ -93,7 +102,7 @@ public class Plant : MonoBehaviour
         if (exp >= plants[growGrade].maxEXP && plants[growGrade].maxEXP!=0)
         {
             growGrade += 1;
-            plant.GetComponent<Image>().sprite = plantSprites[growGrade];
+            plant.GetComponent<SpriteRenderer>().sprite = plantSprites[growGrade];
 
             if(growGrade==3||growGrade==4)
                 isComplete = true;
@@ -101,6 +110,7 @@ public class Plant : MonoBehaviour
             hp=plants[growGrade].maxHP;
             exp=0;
         }
+        eventControl.eventObj.SetActive(false);
 
         //이벤트 딜레이 코루틴 호출
         StartCoroutine(eventControl.DelayTime());
@@ -115,19 +125,18 @@ public class Plant : MonoBehaviour
         //검사 후 현 상태에 따라 성장 단계 변경
         //스프라이트 변경, isComplete 판정
         //단계에 따라 상시 이벤트 호출
-
         //체력 검사=시듦 판정
         if (hp <= plants[growGrade].maxHP)
         {
             if (growGrade >= 2)
             {
                 growGrade = 5;
-                plant.GetComponent<Image>().sprite = plantSprites[growGrade];
+                plant.GetComponent<SpriteRenderer>().sprite= plantSprites[growGrade];
                 isComplete = false;
 
                 //제거 이벤트 호출 및 켜기
                 eventControl.EventAppear();
-                eventControl.GetComponent<GameObject>().SetActive(true);
+                eventControl.eventObj.SetActive(true);
 
                 hp = plants[growGrade].maxHP;
                 exp = plants[growGrade].maxEXP;
@@ -135,12 +144,12 @@ public class Plant : MonoBehaviour
             else
             {
                 growGrade = 0;
-                plant.GetComponent<Image>().sprite = plantSprites[growGrade];
+                plant.GetComponent<SpriteRenderer>().sprite = plantSprites[growGrade];
                 isComplete = false;
 
                 //씨앗 이벤트 호출 및 켜기
                 eventControl.EventAppear();
-                eventControl.GetComponent<GameObject>().SetActive(true);
+                eventControl.eventObj.SetActive(true);
 
                 hp = plants[growGrade].maxHP;
                 exp = plants[growGrade].maxEXP;
@@ -148,6 +157,8 @@ public class Plant : MonoBehaviour
         }
         else
         {
+            eventControl.eventObj.SetActive(false);
+
             //이벤트 딜레이 코루틴 호출
             StartCoroutine(eventControl.DelayTime());
         }
