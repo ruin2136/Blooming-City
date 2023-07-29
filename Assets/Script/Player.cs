@@ -16,7 +16,7 @@ public class Player : MonoBehaviour
 
     Transform transform;
     Rigidbody2D rigid;
-    ActionType actionType;
+    public ActionType actionType;
 
     public enum ActionType
     {

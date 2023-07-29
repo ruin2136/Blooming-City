@@ -143,7 +143,7 @@ public class Plant : MonoBehaviour
             exp = 0;
         }
         eventControl.eventObj.SetActive(false);
-        eventControl.eventFront.SetActive(false);
+        eventControl.eventGauge.SetActive(false);
 
         //체력 업데이트 삽입
         HP_Update();
