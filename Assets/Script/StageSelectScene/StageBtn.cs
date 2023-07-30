@@ -54,7 +54,12 @@ public class StageBtn : MonoBehaviour
 
         if (GameManager.instance.isCutSceneShown)
         {
-            Debug.Log("진입0");
+            Debug.Log("컷씬진입");
+            for (int i = 0; i < selectBtnArr.Length; i++)
+            {
+                StartCoroutine(FadeIn(selectBtnArr[i]));
+            }
+            StartCoroutine(FadeIn(backGround));
         }
         else //컷씬 및 이미지 페이드 연출
         {
