@@ -53,6 +53,17 @@ public class SoundManager : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
         #endregion
 
+        SceneManager.sceneLoaded += OnSceneLoaded;
+
+        InitBGMClip();
+        if (!GameManager.instance.isCutSceneShown)
+            Invoke("PlayBGM", 22f);
+        else
+            PlayBGM();
+    }
+
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
         InitBGMClip();
         if (!GameManager.instance.isCutSceneShown)
             Invoke("PlayBGM", 22f);

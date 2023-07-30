@@ -9,7 +9,6 @@ public class StageBtn : MonoBehaviour
 {
     public GameObject tapToStartBtn;
     public GameObject[] selectBtnArr;
-    public Sprite[] ChangeSelectBtnArr;
 
     public GameObject[] FadeOutObjectArr;
     public GameObject tapToStartText;
