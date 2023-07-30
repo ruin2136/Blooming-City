@@ -38,7 +38,6 @@ public class StageManager : MonoBehaviour
         Debug.Log(stageClear);
 
         CheckClear();
-
     }
 
     void CheckClear()
