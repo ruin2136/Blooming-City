@@ -60,6 +60,7 @@ public class StageBtn : MonoBehaviour
                 StartCoroutine(FadeIn(selectBtnArr[i]));
             }
             StartCoroutine(FadeIn(backGround));
+            tapToStartBtn.SetActive(false);
         }
         else //컷씬 및 이미지 페이드 연출
         {
