@@ -546,14 +546,15 @@ MonoBehaviour:
   eventIcon: {fileID: 6715133209379246250}
   eventGauge: {fileID: 1080200590048510640}
   isEvent: 0
+  eventAudio: {fileID: 0}
   coolTime: 5
   eventSprites:
   - {fileID: 21300000, guid: 6b6a13642b11a474e81a437f9aa52627, type: 3}
   - {fileID: 21300000, guid: 62bdcda96cc1b234f8722bbaf8307ac8, type: 3}
   - {fileID: 21300000, guid: 39fd7b74d248583409d04ecea783e173, type: 3}
   - {fileID: 21300000, guid: 79b14543f972f1544b99fb322325cd31, type: 3}
-  - {fileID: 21300000, guid: 93bf7b53949d1994385dc086af1747ff, type: 3}
-  - {fileID: 21300000, guid: f00b8a9e4280ebe4db6b4c1b47dc2150, type: 3}
+  - {fileID: 21300000, guid: a249c60900f6c4a45b03cc71a881a08b, type: 3}
+  - {fileID: 21300000, guid: 4ac089c1594b2d54b8d52a8b41df97f2, type: 3}
   eventDelay: 0
   maxDelay: 4
   minDelay: 4

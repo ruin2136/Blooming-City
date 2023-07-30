@@ -63,10 +63,12 @@ public class Player : MonoBehaviour
         #region LeftRight
         else if (Input.GetKey(KeyCode.A))
         {
+            GetComponent<SpriteRenderer>().flipX = false;
             rigid.velocity = new Vector3(-incresePosInUpdate, 0, 0);
         }
         else if (Input.GetKey(KeyCode.D))
         {
+            GetComponent<SpriteRenderer>().flipX = true;
             rigid.velocity = new Vector3(incresePosInUpdate, 0, 0);
         }
         else
