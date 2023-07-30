@@ -1180,9 +1180,9 @@ MonoBehaviour:
   - {fileID: 8300000, guid: fdea85be0ed17fb41b4a116b4dbb9918, type: 3}
   - {fileID: 8300000, guid: 94d9039bb51690b49b73603414f25b37, type: 3}
   stageBGMClipArr:
+  - {fileID: 8300000, guid: 6590422945abf6a4385ef886874adfda, type: 3}
   - {fileID: 8300000, guid: dea2ddb1396328e4f8c5fcfdbaad3152, type: 3}
-  - {fileID: 8300000, guid: 75a939139fb7f27478fa0bd4f369a1e9, type: 3}
-  - {fileID: 0}
+  - {fileID: 8300000, guid: dea2ddb1396328e4f8c5fcfdbaad3152, type: 3}
   plantingSFXArr:
   - {fileID: 8300000, guid: 6a3bdced1e02888448771a61be85de29, type: 3}
   - {fileID: 8300000, guid: 2410da3cb8a75f843b1be427011b07f7, type: 3}
