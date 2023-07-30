@@ -6940,7 +6940,7 @@ MonoBehaviour:
   - {fileID: 1272807924}
   - {fileID: 627985783}
   stageClear: 0
-  stageNumber: 0
+  stageNumber: 1
   clearPopUp: {fileID: 1824493318}
 --- !u!4 &1990174105
 Transform:
