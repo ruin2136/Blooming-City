@@ -11,7 +11,7 @@ public class Plant : MonoBehaviour
 
     public int hp, exp;
     public bool isComplete = false;
-    bool isOlive;
+    bool isOlive=false;
     public int growGrade = 0;
 
     public Sprite[] poppySprites;
