@@ -13,7 +13,7 @@ public class Player : MonoBehaviour
     bool isHolding = true;
     float tmpTime;
 
-    Animator ani;
+
     Transform transform;
     Rigidbody2D rigid;
     public ActionType actionType;
@@ -30,7 +30,6 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
-        ani = GetComponent<Animator>();
         tmpTime = minHoldingTime;
         transform = GetComponent<Transform>();
         rigid = transform.GetComponent<Rigidbody2D>();
@@ -44,28 +43,20 @@ public class Player : MonoBehaviour
         {
             isHolding = true;
             tmpTime = minHoldingTime;
-            ani.SetBool("isWork", true);
-        }
-        else
-        {
-            ani.SetBool("isWork", false);
         }
 
     }
 
     private void Move()
     {
-
         #region UpDown
         if (Input.GetKey(KeyCode.W))
         {
             rigid.velocity = new Vector3(0, incresePosInUpdate, 0);
-            ani.SetBool("isWalk", true);
         }
         else if (Input.GetKey(KeyCode.S))
         {
             rigid.velocity = new Vector3(0, -incresePosInUpdate, 0);
-            ani.SetBool("isWalk", false);
         }
         #endregion
 
@@ -73,18 +64,15 @@ public class Player : MonoBehaviour
         else if (Input.GetKey(KeyCode.A))
         {
             rigid.velocity = new Vector3(-incresePosInUpdate, 0, 0);
-            ani.SetBool("isWalk", true);
         }
         else if (Input.GetKey(KeyCode.D))
         {
             rigid.velocity = new Vector3(incresePosInUpdate, 0, 0);
-            ani.SetBool("isWalk", true);
         }
         else
         {
             //키 뗐을 시 속도 리셋
             rigid.velocity = Vector3.zero;
-            ani.SetBool("isWalk", false);
         }
         #endregion
     }

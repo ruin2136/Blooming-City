@@ -6,8 +6,6 @@ using UnityEditor.UI;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
-using UnityEditor.SearchService;
 
 public class Event : MonoBehaviour
 {
@@ -75,11 +73,7 @@ public class Event : MonoBehaviour
         frames[5].upEXP = 0;
         #endregion
 
-        if(SceneManager.GetActiveScene().ToString()== "Stage3" || SceneManager.GetActiveScene().ToString() == "Stage2")
-        {
-            plant.OliveDecide();
-        }
-
+        plant.OliveDecide();
         plant.Wither(frames[(int)eventType]);
     }
 
@@ -195,12 +189,7 @@ public class Event : MonoBehaviour
                 eventType = EventType.Sowing;
                 eventIcon.GetComponent<Image>().sprite = eventSprites[(int)eventType];
 
-                if (SceneManager.GetActiveScene().ToString() == "Stage3" || SceneManager.GetActiveScene().ToString() == "Stage2")
-                {
-                    plant.OliveDecide();
-                }
-
-                isEvent =true;
+                isEvent=true;
                 break;
 
             case 1:
@@ -208,10 +197,7 @@ public class Event : MonoBehaviour
             case 3:
                 //2~4단계면 1~3중 랜덤 호출
                 //코루틴 호출
-                if(SceneManager.GetActiveScene().ToString() == "Stage3")
-                    eventType = (EventType)UnityEngine.Random.Range(1, 4);
-                else
-                    eventType = (EventType)UnityEngine.Random.Range(1, 3);
+                eventType = (EventType)UnityEngine.Random.Range(1, 4);
                 eventIcon.GetComponent<Image>().sprite = eventSprites[(int)eventType];
 
                 coroutine = TimeLimit(coolTime);
