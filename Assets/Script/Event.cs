@@ -79,6 +79,8 @@ public class Event : MonoBehaviour
 
     public IEnumerator TimeLimit(float cool)
     {
+        float tmp = 0f;
+
         isEvent = true;
 
         print("시간제한 코루틴 실행");
@@ -88,16 +90,17 @@ public class Event : MonoBehaviour
         //이벤트 쿨타임 시각화
         eventGauge.GetComponent<Image>().fillAmount = 0;
 
-        while (cool > 0f)
+        while (tmp <= cool)
         {
-            cool -= Time.deltaTime;
-            eventGauge.GetComponent<Image>().fillAmount = (1.0f / cool);
+            tmp += Time.deltaTime;
+            eventGauge.GetComponent<Image>().fillAmount = (tmp / cool);
             yield return new WaitForFixedUpdate();
         }
 
         isEvent = false;
         //Fail() 호출
         Fail();
+        eventGauge.SetActive(false);
 
         print("시간제한 코루틴 완료");
 
