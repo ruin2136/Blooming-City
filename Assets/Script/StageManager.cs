@@ -16,16 +16,29 @@ public class StageManager : MonoBehaviour
     {
         if(!stageClear)
         {
-            for(int i = 0; i < plants.Length; i++)
+            int count = 0;
+            foreach (var plant in plants)
             {
-                if (plants[i].GetComponent<Plant>().isComplete)
-                    stageClear = true;
-                else
-                    stageClear = false;
+                if(plant.GetComponent<Plant>().isComplete)
+                    count++;
             }
+
+            if(count == plants.Length)
+                stageClear=true;
+
+            //for(int i = 0; i < plants.Length; i++)
+            //{
+            //    if (plants[i].GetComponent<Plant>().isComplete)
+            //        stageClear = true;
+            //    else
+            //        stageClear = false;
+            //}
         }
 
+        Debug.Log(stageClear);
+
         CheckClear();
+
     }
 
     void CheckClear()
